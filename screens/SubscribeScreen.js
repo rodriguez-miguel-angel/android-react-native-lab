@@ -8,7 +8,11 @@ import { validateEmail } from '../utils';
 const SubscribeScreen = () => {
   // Add subscribe screen code here
 
-  const [email, onChangeEmail] = useState('');
+  const [email, setEmail] = useState('');
+
+  // Step 6: Validate email
+  const isEmailValid = validateEmail(email);
+
 
   // See <https://reactnative.dev/docs/alert>.
   const createConfirmSubscriptionAlert = () =>
@@ -35,14 +39,14 @@ const SubscribeScreen = () => {
       <TextInput
           style={styles.inputBox}
           value={email}
-          onChangeText={onChangeEmail}
+          onChangeText={setEmail}
           placeholder={'Type your email'}
           keyboardType={'email-address'}
       />
       <Pressable
         style={styles.subscribeButton}
-        disabled={!validateEmail(email)}
-        onPress={validateEmail(email) && createConfirmSubscriptionAlert}>
+        disabled={!isEmailValid}
+        onPress={isEmailValid && createConfirmSubscriptionAlert}>
           <Text style={styles.subscribeText}>Subscribe</Text>
       </Pressable>
     </View>
@@ -53,6 +57,8 @@ const SubscribeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 24,
+    backgroundColor: '#FFFFFF',
   },
   contentWrapper: {
     flexDirection: 'column',
